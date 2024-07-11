@@ -27,6 +27,16 @@ export default function Home() {
         <SearchButton />
       </form>
 
+      {!searchResult && (
+        <p className="p-8 text-center">Realiza una búsqueda.</p>
+      )}
+
+      {searchResult && "error" in searchResult && (
+        <p className="p-8 text-center">
+          Ocurrió un error al realizar la búsqueda.
+        </p>
+      )}
+
       {searchResult && !("error" in searchResult) && (
         <Tabs className="w-full mt-4" defaultValue={SpotifySearchType.Track}>
           <TabsList className="w-full grid grid-cols-3">
