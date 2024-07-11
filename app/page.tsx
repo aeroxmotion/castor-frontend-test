@@ -2,31 +2,29 @@
 
 import { useFormState } from "react-dom";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { searchOnSpotify } from "./actions";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TracksTab } from "./components/TracksTab";
+import { TracksTab } from "./_components/TracksTab";
 import { SpotifySearchType } from "@/lib/types";
-import { ArtistsTab } from "./components/ArtistsTab";
-import { AlbumsTab } from "./components/AlbumsTab";
+import { ArtistsTab } from "./_components/ArtistsTab";
+import { AlbumsTab } from "./_components/AlbumsTab";
+import { SearchButton } from "./_components/SearchButton";
 
 export default function Home() {
   const [searchResult, sendSearch] = useFormState(searchOnSpotify, null);
 
-  console.log({ searchResult });
-
   return (
-    <main className="flex flex-col items-center pt-16">
+    <main className="flex flex-col items-center py-16">
       <form className="w-full flex" action={sendSearch}>
         <Input
           type="search"
           name="search"
-          className="grow"
+          className="grow mr-2"
           placeholder="Busca una canción, artista, álbum..."
         />
 
-        <Button className="ml-2">Buscar</Button>
+        <SearchButton />
       </form>
 
       {searchResult && !("error" in searchResult) && (

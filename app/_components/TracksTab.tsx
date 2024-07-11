@@ -1,4 +1,7 @@
+"use client";
+
 import { type FC } from "react";
+import { useRouter } from "next/navigation";
 
 import { SpotifySearchType, type SpotifyTrack } from "@/lib/types";
 import { TabsContent } from "@/components/ui/tabs";
@@ -16,6 +19,12 @@ interface TracksTabProps {
 }
 
 export const TracksTab: FC<TracksTabProps> = ({ tracks }) => {
+  const router = useRouter();
+
+  const onTrackClick = (track: SpotifyTrack) => {
+    router.push(`/track/${track.id}`);
+  };
+
   return (
     <TabsContent value={SpotifySearchType.Track}>
       <Table>
@@ -30,7 +39,7 @@ export const TracksTab: FC<TracksTabProps> = ({ tracks }) => {
 
         <TableBody>
           {tracks.map((track) => (
-            <TableRow key={track.id}>
+            <TableRow onClick={() => onTrackClick(track)} key={track.id}>
               <TableCell>{track.name}</TableCell>
               <TableCell>
                 {track.artists.map((artist) => artist.name).join(", ")}

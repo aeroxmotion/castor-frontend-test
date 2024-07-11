@@ -21,10 +21,12 @@ export const AlbumsTab: FC<AlbumsTabProps> = ({ albums }) => {
     <TabsContent value={SpotifySearchType.Album}>
       <Table>
         <TableHeader>
-          <TableHead />
-          <TableHead>Nombre</TableHead>
-          <TableHead>Artistas</TableHead>
-          <TableHead className="text-right">Año de lanzamiento</TableHead>
+          <TableRow>
+            <TableHead />
+            <TableHead>Nombre</TableHead>
+            <TableHead>Artistas</TableHead>
+            <TableHead className="text-right">Año de lanzamiento</TableHead>
+          </TableRow>
         </TableHeader>
 
         <TableBody>

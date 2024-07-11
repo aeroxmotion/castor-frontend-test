@@ -1,4 +1,4 @@
-type SpotifyID = string;
+export type SpotifyID = string;
 
 export enum SpotifySearchType {
   Album = "album",
