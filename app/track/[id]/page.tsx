@@ -3,8 +3,6 @@ import { cookies } from "next/headers";
 
 import { SpotifyID, SpotifyTrack } from "@/lib/types";
 import { GoBackButton } from "@/app/_components/GoBackButton";
-import { Button } from "@/components/ui/button";
-import { PlayIcon } from "@radix-ui/react-icons";
 import { SpotifyPlayer } from "@/components/SpotifyPlayer";
 
 interface TrackDetailProps {
