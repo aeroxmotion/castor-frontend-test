@@ -39,7 +39,11 @@ export const TracksTab: FC<TracksTabProps> = ({ tracks }) => {
 
         <TableBody>
           {tracks.map((track) => (
-            <TableRow onClick={() => onTrackClick(track)} key={track.id}>
+            <TableRow
+              className="cursor-pointer"
+              onClick={() => onTrackClick(track)}
+              key={track.id}
+            >
               <TableCell>{track.name}</TableCell>
               <TableCell>
                 {track.artists.map((artist) => artist.name).join(", ")}
