@@ -1,4 +1,7 @@
+"use client";
+
 import { type FC } from "react";
+import { useRouter } from "next/navigation";
 
 import { SpotifyArtist, SpotifySearchType } from "@/lib/types";
 import { TabsContent } from "@/components/ui/tabs";
@@ -17,6 +20,12 @@ interface ArtistsTabProps {
 }
 
 export const ArtistsTab: FC<ArtistsTabProps> = ({ artists }) => {
+  const router = useRouter();
+
+  const onArtistClick = (artist: SpotifyArtist) => {
+    router.push(`/artist/${artist.id}`);
+  };
+
   return (
     <TabsContent value={SpotifySearchType.Artist}>
       <Table>
@@ -32,7 +41,11 @@ export const ArtistsTab: FC<ArtistsTabProps> = ({ artists }) => {
 
         <TableBody>
           {artists.map((artist) => (
-            <TableRow key={artist.id}>
+            <TableRow
+              key={artist.id}
+              className="cursor-pointer"
+              onClick={() => onArtistClick(artist)}
+            >
               <TableCell>
                 <Avatar>
                   <AvatarImage src={artist.images[0]?.url} />
