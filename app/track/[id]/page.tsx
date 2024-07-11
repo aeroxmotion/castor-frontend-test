@@ -5,6 +5,7 @@ import { SpotifyID, SpotifyTrack } from "@/lib/types";
 import { GoBackButton } from "@/app/_components/GoBackButton";
 import { Button } from "@/components/ui/button";
 import { PlayIcon } from "@radix-ui/react-icons";
+import { SpotifyPlayer } from "@/components/SpotifyPlayer";
 
 interface TrackDetailProps {
   params: { id: SpotifyID };
@@ -55,9 +56,7 @@ export default async function TrackDetail({ params }: TrackDetailProps) {
 
           <p className="mb-8">© {track.album.release_date.split("-")[0]}</p>
 
-          <Button>
-            Reproducir canción <PlayIcon className="ml-1" />
-          </Button>
+          <SpotifyPlayer path={`/track/${params.id}`} width={400} height={80} />
         </div>
       </main>
     </div>

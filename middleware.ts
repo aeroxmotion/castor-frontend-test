@@ -22,5 +22,5 @@ export function middleware({ cookies, url }: NextRequest) {
 
 export const config: MiddlewareConfig = {
   // Ignore `_next` specific files and auth callback (Spotify API)
-  matcher: ["/((?!_next|callback))"],
+  matcher: ["/((?!_next|callback).*)"],
 };
