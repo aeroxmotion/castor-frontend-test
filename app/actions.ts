@@ -1,12 +1,10 @@
 "use server";
 
-import { cookies } from "next/headers";
-
 import {
-  SpotifyAPIErrorResponse,
-  SpotifyAPISearchResponse,
   SpotifySearchType,
-} from "@/lib/types";
+  GetSpotifySearchResponse,
+} from "@/client/spotify/types";
+import { getSpotifySearch } from "@/client/spotify";
 
 const SEARCH_TYPES = [
   SpotifySearchType.Album,
@@ -17,24 +15,13 @@ const SEARCH_TYPES = [
 export async function searchOnSpotify(
   _: any,
   formData: FormData
-): Promise<SpotifyAPISearchResponse | SpotifyAPIErrorResponse | null> {
-  const params = new URLSearchParams({
-    q: formData.get("search") as string,
-    type: SEARCH_TYPES.join(),
-  });
-
-  const response = await fetch(
-    `${process.env.SPOTIFY_API_BASE_URL}/search?${params.toString()}`,
-    {
-      headers: {
-        Authorization: `Bearer ${cookies().get("SPOTIFY_TOKEN")?.value}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    return { error: await response.text() };
+): Promise<GetSpotifySearchResponse | { error: any } | null> {
+  try {
+    return await getSpotifySearch({
+      q: formData.get("search") as string,
+      type: SEARCH_TYPES,
+    });
+  } catch (error: any) {
+    return { error: String(error) };
   }
-
-  return response.json();
 }

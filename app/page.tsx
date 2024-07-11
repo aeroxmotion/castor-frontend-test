@@ -2,14 +2,14 @@
 
 import { useFormState } from "react-dom";
 
-import { Input } from "@/components/ui/input";
 import { searchOnSpotify } from "./actions";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
 import { TracksTab } from "./_components/TracksTab";
-import { SpotifySearchType } from "@/lib/types";
-import { ArtistsTab } from "./_components/ArtistsTab";
 import { AlbumsTab } from "./_components/AlbumsTab";
+import { ArtistsTab } from "./_components/ArtistsTab";
 import { SearchButton } from "./_components/SearchButton";
+import { SpotifySearchType } from "@/client/spotify/types";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   const [searchResult, sendSearch] = useFormState(searchOnSpotify, null);

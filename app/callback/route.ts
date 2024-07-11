@@ -1,3 +1,4 @@
+import { getSpotifyToken } from "@/client/spotify";
 import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
@@ -16,36 +17,18 @@ export async function GET(request: Request) {
     return new Response(`Auth error: ${error}`, { status: 403 });
   }
 
-  const form = new URLSearchParams({
-    code: searchParams.get("code")!,
-    grant_type: "authorization_code",
-    redirect_uri: new URL("/callback", request.url).toString(),
-  });
+  try {
+    const result = await getSpotifyToken({
+      code: searchParams.get("code")!,
+      redirect_uri: new URL("/callback", request.url).toString(),
+    });
 
-  const response = await fetch(
-    `${process.env.SPOTIFY_AUTH_API_BASE_URL}/api/token`,
-    {
-      method: "POST",
-      body: form.toString(),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${Buffer.from(
-          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
-        ).toString("base64")}`,
-      },
-      cache: "no-cache",
-    }
-  );
+    cookies().set("SPOTIFY_TOKEN", result.access_token);
 
-  if (!response.ok) {
-    console.log(await response.json());
+    return Response.redirect(new URL("/", request.url));
+  } catch (error) {
+    console.log("Error response:", error);
 
     return new Response("Invalid auth", { status: 500 });
   }
-
-  const result = await response.json();
-
-  cookies().set("SPOTIFY_TOKEN", result.access_token);
-
-  return Response.redirect(new URL("/", request.url));
 }

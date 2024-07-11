@@ -1,33 +1,15 @@
 import Image from "next/image";
-import { cookies } from "next/headers";
 
-import { SpotifyAlbum, SpotifyID } from "@/lib/types";
+import { getSpotifyAlbum } from "@/client/spotify";
+import { SpotifyID } from "@/client/spotify/types";
 import { GoBackButton } from "@/app/_components/GoBackButton";
 
 interface AlbumDetailProps {
   params: { id: SpotifyID };
 }
 
-async function getAlbumDetail(albumID: SpotifyID): Promise<SpotifyAlbum> {
-  const response = await fetch(
-    `${process.env.SPOTIFY_API_BASE_URL}/albums/${encodeURIComponent(albumID)}`,
-    {
-      headers: {
-        Authorization: `Bearer ${cookies().get("SPOTIFY_TOKEN")?.value}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    console.log(await response.text());
-    throw new Error("Invalid response");
-  }
-
-  return response.json();
-}
-
 export default async function AlbumDetail({ params }: AlbumDetailProps) {
-  const album = await getAlbumDetail(params.id);
+  const album = await getSpotifyAlbum(params.id);
 
   return (
     <div className="pt-16">

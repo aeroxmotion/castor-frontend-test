@@ -3,8 +3,6 @@
 import { type FC } from "react";
 import { useRouter } from "next/navigation";
 
-import { SpotifySearchType, type SpotifyTrack } from "@/lib/types";
-import { TabsContent } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -13,6 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TabsContent } from "@/components/ui/tabs";
+import { SpotifySearchType, SpotifyTrack } from "@/client/spotify/types";
 
 interface TracksTabProps {
   tracks: SpotifyTrack[];

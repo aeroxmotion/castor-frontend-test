@@ -1,34 +1,16 @@
 import Image from "next/image";
-import { cookies } from "next/headers";
 
-import { SpotifyID, SpotifyTrack } from "@/lib/types";
-import { GoBackButton } from "@/app/_components/GoBackButton";
+import { getSpotifyTrack } from "@/client/spotify";
+import { SpotifyID } from "@/client/spotify/types";
 import { SpotifyPlayer } from "@/components/SpotifyPlayer";
+import { GoBackButton } from "@/app/_components/GoBackButton";
 
 interface TrackDetailProps {
   params: { id: SpotifyID };
 }
 
-async function getTrackDetail(trackID: SpotifyID): Promise<SpotifyTrack> {
-  const response = await fetch(
-    `${process.env.SPOTIFY_API_BASE_URL}/tracks/${encodeURIComponent(trackID)}`,
-    {
-      headers: {
-        Authorization: `Bearer ${cookies().get("SPOTIFY_TOKEN")?.value}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    console.log(await response.text());
-    throw new Error("Invalid response");
-  }
-
-  return response.json();
-}
-
 export default async function TrackDetail({ params }: TrackDetailProps) {
-  const track = await getTrackDetail(params.id);
+  const track = await getSpotifyTrack(params.id);
 
   return (
     <div className="pt-16">

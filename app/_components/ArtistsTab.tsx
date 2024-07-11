@@ -3,8 +3,6 @@
 import { type FC } from "react";
 import { useRouter } from "next/navigation";
 
-import { SpotifyArtist, SpotifySearchType } from "@/lib/types";
-import { TabsContent } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -13,6 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TabsContent } from "@/components/ui/tabs";
+import { SpotifyArtist, SpotifySearchType } from "@/client/spotify/types";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface ArtistsTabProps {

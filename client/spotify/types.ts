@@ -1,5 +1,25 @@
 export type SpotifyID = string;
 
+export interface GetSpotifyTokenParams {
+  code: string;
+  redirect_uri: string;
+}
+
+export interface GetSpotifyTokenResponse {
+  access_token: string;
+}
+
+export interface GetSpotifySearchParams {
+  q: string;
+  type: SpotifySearchType[];
+}
+
+export interface GetSpotifySearchResponse {
+  tracks: { items: SpotifyTrack[] };
+  artists: { items: SpotifyArtist[] };
+  albums: { items: SpotifyAlbum[] };
+}
+
 export enum SpotifySearchType {
   Album = "album",
   Artist = "artist",
@@ -38,14 +58,4 @@ export interface SpotifyAlbum {
   artists: SpotifyArtist[];
   release_date: string;
   release_date_precision: string;
-}
-
-export interface SpotifyAPISearchResponse {
-  tracks: { items: SpotifyTrack[] };
-  artists: { items: SpotifyArtist[] };
-  albums: { items: SpotifyAlbum[] };
-}
-
-export interface SpotifyAPIErrorResponse {
-  error: string;
 }
