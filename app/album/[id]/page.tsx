@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 
 import { SpotifyAlbum, SpotifyID } from "@/lib/types";
 import { GoBackButton } from "@/app/_components/GoBackButton";
-import { SpotifyPlayer } from "@/components/SpotifyPlayer";
 
 interface AlbumDetailProps {
   params: { id: SpotifyID };
@@ -52,8 +51,6 @@ export default async function AlbumDetail({ params }: AlbumDetailProps) {
           <p className="mb-8">© {album.release_date.split("-")[0]}</p>
         </div>
       </main>
-
-      <SpotifyPlayer path={`/album/${params.id}`} width="100%" height={400} />
     </div>
   );
 }
