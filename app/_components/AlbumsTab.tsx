@@ -39,6 +39,14 @@ export const AlbumsTab: FC<AlbumsTabProps> = ({ albums }) => {
         </TableHeader>
 
         <TableBody>
+          {!albums.length && (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                No se encontraron álbumes para la búsqueda realizada.
+              </TableCell>
+            </TableRow>
+          )}
+
           {albums.map((album) => (
             <TableRow
               key={album.id}

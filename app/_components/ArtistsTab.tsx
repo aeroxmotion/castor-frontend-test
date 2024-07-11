@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatNumber } from "@/lib/utils";
 import { TabsContent } from "@/components/ui/tabs";
 import { SpotifyArtist, SpotifySearchType } from "@/client/spotify/types";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -40,6 +41,14 @@ export const ArtistsTab: FC<ArtistsTabProps> = ({ artists }) => {
         </TableHeader>
 
         <TableBody>
+          {!artists.length && (
+            <TableRow>
+              <TableCell colSpan={5} className="text-center">
+                No se encontraron artistas para la búsqueda realizada.
+              </TableCell>
+            </TableRow>
+          )}
+
           {artists.map((artist) => (
             <TableRow
               key={artist.id}
@@ -62,7 +71,7 @@ export const ArtistsTab: FC<ArtistsTabProps> = ({ artists }) => {
               <TableCell>{artist.name}</TableCell>
               <TableCell>{artist.genres.join(", ") || "N/A"}</TableCell>
               <TableCell className="text-right">
-                {artist.followers.total}
+                {formatNumber(artist.followers.total)}
               </TableCell>
               <TableCell className="text-right">{artist.popularity}%</TableCell>
             </TableRow>

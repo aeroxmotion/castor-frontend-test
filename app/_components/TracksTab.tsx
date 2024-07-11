@@ -38,6 +38,14 @@ export const TracksTab: FC<TracksTabProps> = ({ tracks }) => {
         </TableHeader>
 
         <TableBody>
+          {!tracks.length && (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                No se encontraron canciones para la búsqueda realizada.
+              </TableCell>
+            </TableRow>
+          )}
+
           {tracks.map((track) => (
             <TableRow
               className="cursor-pointer"
