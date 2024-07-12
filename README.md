@@ -17,3 +17,7 @@ $ npm run dev
 ```
 
 Esto iniciará un servidor de desarrollo corriendo sobre el puerto `3000`, por defecto.
+
+## Live Demo
+
+Se puede visualizar una demo en vivo de la aplicación en el siguiente enlace: https://aeroxmotion-castor-frontend-test.vercel.app
