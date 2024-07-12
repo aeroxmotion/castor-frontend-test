@@ -1,7 +1,6 @@
 "use server";
 
 import ky from "ky";
-import { cookies } from "next/headers";
 
 import type {
   SpotifyID,
@@ -13,6 +12,7 @@ import type {
   SpotifyArtist,
   SpotifyTrack,
 } from "./types";
+import { injectTokenHook } from "./hooks";
 
 const spotifyAuthClient = ky.extend({
   prefixUrl: process.env.SPOTIFY_AUTH_API_BASE_URL,
@@ -21,16 +21,7 @@ const spotifyAuthClient = ky.extend({
 const spotifyClient = ky.extend({
   prefixUrl: process.env.SPOTIFY_API_BASE_URL,
   hooks: {
-    beforeRequest: [
-      (request) => {
-        const nextRequest = request.clone();
-        const token = cookies().get("SPOTIFY_TOKEN")!.value;
-
-        nextRequest.headers.set("Authorization", `Bearer ${token}`);
-
-        return nextRequest;
-      },
-    ],
+    beforeRequest: [injectTokenHook],
   },
 });
 
