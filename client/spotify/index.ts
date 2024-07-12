@@ -65,6 +65,26 @@ export async function getSpotifyAlbum(
   return spotifyClient.get(`albums/${encodeURIComponent(albumID)}`).json();
 }
 
+export async function checkSpotifyUserSavedAlbum(
+  albumID: SpotifyID
+): Promise<boolean> {
+  const result = await spotifyClient
+    .get("me/albums/contains", { searchParams: { ids: albumID } })
+    .json<boolean[]>();
+
+  return result[0];
+}
+
+export async function saveSpotifyUserAlbum(albumID: SpotifyID): Promise<any> {
+  return spotifyClient.put("me/albums", { json: { ids: [albumID] } }).json();
+}
+
+export async function removeSpotifyUserSavedAlbum(
+  albumID: SpotifyID
+): Promise<any> {
+  return spotifyClient.delete("me/albums", { json: { ids: [albumID] } }).json();
+}
+
 export async function getSpotifyArtist(
   artistID: SpotifyID
 ): Promise<SpotifyArtist> {
@@ -75,4 +95,24 @@ export async function getSpotifyTrack(
   trackID: SpotifyID
 ): Promise<SpotifyTrack> {
   return spotifyClient.get(`tracks/${encodeURIComponent(trackID)}`).json();
+}
+
+export async function checkSpotifyUserSavedTrack(
+  trackID: SpotifyID
+): Promise<boolean> {
+  const result = await spotifyClient
+    .get("me/tracks/contains", { searchParams: { ids: trackID } })
+    .json<boolean[]>();
+
+  return result[0];
+}
+
+export async function saveSpotifyUserTrack(trackID: SpotifyID): Promise<any> {
+  return spotifyClient.put("me/tracks", { json: { ids: [trackID] } }).json();
+}
+
+export async function removeSpotifyUserSavedTrack(
+  trackID: SpotifyID
+): Promise<any> {
+  return spotifyClient.delete("me/tracks", { json: { ids: [trackID] } }).json();
 }

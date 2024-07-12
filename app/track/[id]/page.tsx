@@ -1,16 +1,20 @@
 import Image from "next/image";
 
-import { getSpotifyTrack } from "@/client/spotify";
 import { SpotifyID } from "@/client/spotify/types";
 import { SpotifyPlayer } from "@/components/SpotifyPlayer";
 import { GoBackButton } from "@/app/_components/GoBackButton";
+import { ToggleTrackButton } from "./_components/ToggleTrackButton";
+import { checkSpotifyUserSavedTrack, getSpotifyTrack } from "@/client/spotify";
 
 interface TrackDetailProps {
   params: { id: SpotifyID };
 }
 
 export default async function TrackDetail({ params }: TrackDetailProps) {
-  const track = await getSpotifyTrack(params.id);
+  const [track, isTrackSaved] = await Promise.all([
+    getSpotifyTrack(params.id),
+    checkSpotifyUserSavedTrack(params.id),
+  ]);
 
   return (
     <div className="pt-16">
@@ -34,7 +38,14 @@ export default async function TrackDetail({ params }: TrackDetailProps) {
             <strong>Álbum:</strong> {track.album.name}
           </p>
 
-          <p className="mb-8">© {track.album.release_date.split("-")[0]}</p>
+          <p className="mb-4">© {track.album.release_date.split("-")[0]}</p>
+
+          <div className="mb-8">
+            <ToggleTrackButton
+              trackID={params.id}
+              isInitiallySaved={isTrackSaved}
+            />
+          </div>
 
           <SpotifyPlayer path={`/track/${params.id}`} width={400} height={80} />
         </div>
