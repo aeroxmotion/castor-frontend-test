@@ -22,6 +22,8 @@ export async function searchOnSpotify(
       type: SEARCH_TYPES,
     });
   } catch (error: any) {
+    console.log("Error while searching:", String(error));
+
     return { error: String(error) };
   }
 }
